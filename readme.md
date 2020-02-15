@@ -7,7 +7,7 @@
 ## Why mirror repositories?
 - You can pipe multiple services. For example, use Bitbucket private repositories
   as a primary storage and self-hosted Gitlab instance as a purely CI/CD tool.
-- Better safe than sorry. Mirroring repos is a single backup alternative for SaaS.
+- Better safe than sorry. Mirroring repos is the only backup option for SaaS.
 
 ## How to use
 

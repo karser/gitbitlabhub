@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eux
+set -eu
 
 # Extract the protocol (includes trailing "://").
 DEST_PROTO="$(echo $DEST_REPO | sed -nr 's,^(.*://).*,\1,p')"
@@ -40,19 +40,23 @@ SRC_URL="$(echo ${SRC_URL/$SRC_PORT/})"
 SRC_PATH="$(echo $SRC_URL | sed -nr 's,[^/:]*([/:].*),\1,p')"
 # Remove the path from the URL.
 SRC_HOST="$(echo ${SRC_URL/$SRC_PATH/})"
-# name that can be used for the folder name
-SRC_PROJECT="$(echo $SRC_PATH | sed -nr 's,.*/(.*)\.git,\1,p')"
+# name that can be used for the folder name e.g vendor/repo
+SRC_PROJECT="$(echo $SRC_PATH | sed -nr 's,:(.*)\.git,\1,p')"
 
 
+printf "\nConfiguring ssh client to use deploy keys\n"
 mkdir -p ~/.ssh
-
 eval `ssh-agent -s`
 echo "$SRC_DEPLOY_KEY" | base64 -d | ssh-add -
 echo "$DEST_DEPLOY_KEY" | base64 -d | ssh-add -
+
+printf "\n\nChecking access to $SRC_HOST\n"
 ssh -o StrictHostKeyChecking=no -T "$SRC_USER$SRC_HOST" -p "$SRC_PORT"
+printf "\n\nChecking access to $DEST_HOST\n"
 ssh -o StrictHostKeyChecking=no -T "$DEST_USER$DEST_HOST" -p "$DEST_PORT"
 
 if [[ ! -d /storage/"$SRC_PROJECT" ]]; then
+  printf "\nCloning $SRC_REPO\n"
   cd /storage
   git clone --bare "$SRC_REPO" "$SRC_PROJECT"
   cd /storage/"$SRC_PROJECT"
@@ -60,5 +64,7 @@ if [[ ! -d /storage/"$SRC_PROJECT" ]]; then
 fi
 
 cd /storage/"$SRC_PROJECT"
+
+printf "\nStarting netcat server on port 8080\n"
 
 while true; do nc -l -p 8080 -e sh -c 'echo -e "HTTP/1.0 200 OK\r\nDate: $(date)\r\nContent-Length: 2\r\n\r\nOK"; sh /usr/local/bin/mirror.sh;'; done
