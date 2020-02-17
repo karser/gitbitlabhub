@@ -65,6 +65,9 @@ fi
 
 cd /storage/"$SRC_PROJECT"
 
+printf "\Triggering first sync\n"
+sh /usr/local/bin/mirror.sh
+
 printf "\nStarting netcat server on port 8080\n"
 
 while true; do nc -l -p 8080 -e sh -c 'echo -e "HTTP/1.0 200 OK\r\nDate: $(date)\r\nContent-Length: 2\r\n\r\nOK"; sh /usr/local/bin/mirror.sh;'; done
