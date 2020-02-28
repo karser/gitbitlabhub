@@ -1,4 +1,6 @@
 # GitBitLabHub: Mirror your repositories between Bitbucket / Gitlab / Github using simple webhooks.
+![Docker Pulls](https://img.shields.io/docker/pulls/karser/gitbitlabhub)
+
 - It's a simple shell script (written in pure bash, even the webserver part).
 - The docker image is Alpine based and the size is about 10 MB.
 - Single container mirrors a single repository.
