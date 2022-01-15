@@ -51,9 +51,9 @@ echo "$SRC_DEPLOY_KEY" | base64 -d | ssh-add -
 echo "$DEST_DEPLOY_KEY" | base64 -d | ssh-add -
 
 printf "\n\nChecking access to $SRC_HOST\n"
-ssh -o StrictHostKeyChecking=no -T "$SRC_USER$SRC_HOST" -p "$SRC_PORT"
+ssh -o StrictHostKeyChecking=no -T "$SRC_USER$SRC_HOST" -p "$SRC_PORT" || 'true'
 printf "\n\nChecking access to $DEST_HOST\n"
-ssh -o StrictHostKeyChecking=no -T "$DEST_USER$DEST_HOST" -p "$DEST_PORT"
+ssh -o StrictHostKeyChecking=no -T "$DEST_USER$DEST_HOST" -p "$DEST_PORT" || 'true'
 
 if [[ ! -d /storage/"$SRC_PROJECT" ]]; then
   printf "\nCloning $SRC_REPO\n"
