@@ -1,10 +1,9 @@
 # GitBitLabHub: Mirror your repositories between Bitbucket / Gitlab / Github using simple webhooks.
-![Docker Pulls](https://img.shields.io/docker/pulls/karser/gitbitlabhub)
+<a href="https://hub.docker.com/r/karser/gitbitlabhub">![Docker Pulls](https://img.shields.io/docker/pulls/karser/gitbitlabhub)</a>
 
 - It's a simple shell script (written in pure bash, even the webserver part).
 - The docker image is Alpine based and the size is about 10 MB.
 - Single container mirrors a single repository.
-- Single-threaded. It will ignore the next webhook while the previous one is being processed. DDoS protection out-of-the-box :). 
 
 ## Why mirror repositories?
 - You can pipe multiple platforms. For example, use Bitbucket private repositories
@@ -88,6 +87,9 @@ networks:
 ```
 With this configuration the webhook url will be https://gitbitlabhub.example.com/vendor/src_repo
 
+## Known issues:
+
+- It will ignore a webhook if it is still processing the previous one. As a rule of thumb, wait 5-10 seconds between `git push` runs.
 
 ## How to build
 
