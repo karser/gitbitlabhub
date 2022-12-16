@@ -3,7 +3,7 @@
 
 - It's a simple shell script (written in pure bash, even the webserver part).
 - The docker image is Alpine based and the size is about 10 MB.
-- Single container mirrors a single repository.
+- One container mirrors one repository.
 
 ## Why mirror repositories?
 - You can pipe multiple platforms. For example, use Bitbucket private repositories
