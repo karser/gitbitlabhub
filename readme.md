@@ -10,6 +10,11 @@
   as a primary storage and self-hosted Gitlab instance as a purely CI/CD tool.
 - Backup your primary repository to another platform.
 
+## Video tutorial
+
+[![Video tutorial](https://user-images.githubusercontent.com/1675033/211899496-00c04463-fb72-4338-b5e4-77fc3c99b63f.png)](https://www.youtube.com/watch?v=xpL_yvdbA8E)
+
+
 ## How to setup mirroring
 
 1. Generate an ssh key for source and destination repositories:
