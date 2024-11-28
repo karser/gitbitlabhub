@@ -2,6 +2,9 @@
 
 set -eu
 
+# Check if there are any command-line arguments specified
+[ "$#" -gt 0 ] && exec "$@"
+
 # Extract the protocol (includes trailing "://").
 DEST_PROTO="$(echo $DEST_REPO | sed -nr 's,^(.*://).*,\1,p')"
 # Remove the protocol from the URL.
